@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.catfish.test2_shiro.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="top.catfish.test2_shiro.model.User">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="pass" jdbcType="VARCHAR" property="pass"/>
+        <result column="uname" jdbcType="VARCHAR" property="uname"/>
+        <result column="date" jdbcType="TIMESTAMP" property="date"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, pass, uname, date
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where uname = #{username,jdbcType=VARCHAR}
+    </select>
+    <select id="selectCountByUsernameAndPassword" parameterType="java.lang.String" resultType="int">
+        select
+        count(*)
+        from user
+        where uname = #{username,jdbcType=VARCHAR} and upass = #{password,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from user
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="top.catfish.test2_shiro.model.User">
+        insert into user (id, pass, uname,
+        date)
+        values (#{id,jdbcType=VARCHAR}, #{pass,jdbcType=VARCHAR}, #{uname,jdbcType=VARCHAR},
+        #{date,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="top.catfish.test2_shiro.model.User">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="pass != null">
+                pass,
+            </if>
+            <if test="uname != null">
+                uname,
+            </if>
+            <if test="date != null">
+                date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="pass != null">
+                #{pass,jdbcType=VARCHAR},
+            </if>
+            <if test="uname != null">
+                #{uname,jdbcType=VARCHAR},
+            </if>
+            <if test="date != null">
+                #{date,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="top.catfish.test2_shiro.model.User">
+        update user
+        <set>
+            <if test="pass != null">
+                pass = #{pass,jdbcType=VARCHAR},
+            </if>
+            <if test="uname != null">
+                uname = #{uname,jdbcType=VARCHAR},
+            </if>
+            <if test="date != null">
+                date = #{date,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="top.catfish.test2_shiro.model.User">
+        update user
+        set pass = #{pass,jdbcType=VARCHAR},
+        uname = #{uname,jdbcType=VARCHAR},
+        date = #{date,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

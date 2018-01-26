@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.catfish.test2_shiro.mapper.RoleResourceMapper" >
+  <resultMap id="BaseResultMap" type="top.catfish.test2_shiro.model.RoleResourceKey" >
+    <id column="role_id" property="roleId" jdbcType="VARCHAR" />
+    <id column="resource_id" property="resourceId" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectByRoleId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    *
+    from role_resource
+    where role_id = #{roleId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="top.catfish.test2_shiro.model.RoleResourceKey" >
+    delete from role_resource
+    where role_id = #{roleId,jdbcType=VARCHAR}
+      and resource_id = #{resourceId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="top.catfish.test2_shiro.model.RoleResourceKey" >
+    insert into role_resource (role_id, resource_id)
+    values (#{roleId,jdbcType=VARCHAR}, #{resourceId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="top.catfish.test2_shiro.model.RoleResourceKey" >
+    insert into role_resource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="resourceId != null" >
+        resource_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceId != null" >
+        #{resourceId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

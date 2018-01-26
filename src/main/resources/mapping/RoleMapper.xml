@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.catfish.test2_shiro.mapper.RoleMapper">
+  <resultMap id="BaseResultMap" type="top.catfish.test2_shiro.model.Role">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="role_desc" jdbcType="VARCHAR" property="roleDesc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, role_desc
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from role
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="top.catfish.test2_shiro.model.Role">
+    insert into role (id, role_desc)
+    values (#{id,jdbcType=VARCHAR}, #{roleDesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="top.catfish.test2_shiro.model.Role">
+    insert into role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="roleDesc != null">
+        role_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="roleDesc != null">
+        #{roleDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="top.catfish.test2_shiro.model.Role">
+    update role
+    <set>
+      <if test="roleDesc != null">
+        role_desc = #{roleDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="top.catfish.test2_shiro.model.Role">
+    update role
+    set role_desc = #{roleDesc,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
